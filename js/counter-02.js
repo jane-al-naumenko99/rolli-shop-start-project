@@ -1,16 +1,23 @@
 // Отслеживание кликов на счетчики
 window.addEventListener('click', function(event) {
     const action = event.target.dataset.action;
+    // значение счётчика и элемент будем определять внутри блока, чтобы избежать
+    // повторных объявлений и проблем со скопом
+    let counterElement;
+    let currentValue;
     
-        // Находим родительный счётчик (обордку счетчик)
+    // проверяем клик строго по кнопкам плюс или минус; || - или, === - строгое сравнение
+    if (action === 'plus' || action === 'minus') {
+        // Находим родительный счётчик (обёртку счётчика)
         const counterWrapper = event.target.closest('.counter-wrapper');
         // Находим див с числом счетчика
-        const counter = counterWrapper.querySelector('[data-counter]');
-        let currentValue = parseInt(counter.innerText);
+        counterElement = counterWrapper.querySelector('[data-counter]');
+        currentValue = parseInt(counterElement.innerText);
+    }
 
+       
     // Проверяем является ли элемент кнопка плюс или минус
     if (action === 'plus' || action === 'minus') {
-        
         
         // Обновляем значение счетчика
         // Проверяем нажата ли кнопка МИНУС
@@ -18,13 +25,13 @@ window.addEventListener('click', function(event) {
             // Проверяем чтобы счётчик был больше 1
             if (currentValue > 1) {
                 // Уменьшаем значение на 1
-                counter.innerText = currentValue - 1;
+                counterElement.innerText = currentValue - 1;
             }
         } 
         // Проверяем нажата ли кнопка ПЛЮС
         else if (action === 'plus') {
             // Увеличиваем значение на 1
-            counter.innerText = currentValue + 1;
+            counterElement.innerText = currentValue + 1;
         }
     }
 });
