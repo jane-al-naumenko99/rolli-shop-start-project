@@ -32,8 +32,11 @@ window.addEventListener('click', function(event) {
                 // Уменьшаем значение на 1
                 counterElement.innerText = currentValue - 1;
             } else if (event.target.closest('.cart-wrapper') && currentValue === 1) {
-                event.target.closest('.cart-item').remove();  // проверка на товар внутри корзины, чтобы удалить товар
-            } 
+                // Если это товар в корзине и количество = 1, удаляем
+                event.target.closest('.cart-item').remove();
+                // Отображение статуса корзины
+                toggleCartStatus();
+            }
         } 
         // Проверяем нажата ли кнопка ПЛЮС
         else if (action === 'plus') {

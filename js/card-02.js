@@ -65,6 +65,9 @@ window.addEventListener('click', function(event) {
 	// сброс счетчика на единицу после добавления товара в корзину
 	card.querySelector('[data-counter]').innerText = 1;
 
+	// отображение статуса корзины при добавлении товара
+	toggleCartStatus ();
+
 }
 
 });
