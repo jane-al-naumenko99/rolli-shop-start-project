@@ -22,26 +22,33 @@ window.addEventListener('click', function(event) {
         // Обновляем значение счетчика
         // Проверяем нажата ли кнопка МИНУС
         if (action === 'minus') {
-
-              // проверка на товар внутри корзины, чтобы удалить товар
-            if (event.target.closest('.cart-wrapper') && currentValue === 1) {
-                event.target.closest('.cart-item').remove();
-            }
-            // Проверяем чтобы счётчик был больше 1
+            // Если счётчик больше 1 — уменьшаем
             if (currentValue > 1) {
-                // Уменьшаем значение на 1
                 counterElement.innerText = currentValue - 1;
+                if (typeof calcCartPriceAndDelivery === 'function') calcCartPriceAndDelivery();
             } else if (event.target.closest('.cart-wrapper') && currentValue === 1) {
                 // Если это товар в корзине и количество = 1, удаляем
                 event.target.closest('.cart-item').remove();
                 // Отображение статуса корзины
-                toggleCartStatus();
+                if (typeof toggleCartStatus === 'function') toggleCartStatus();
+                if (typeof calcCartPriceAndDelivery === 'function') calcCartPriceAndDelivery();
             }
-        } 
+        }
         // Проверяем нажата ли кнопка ПЛЮС
         else if (action === 'plus') {
             // Увеличиваем значение на 1
             counterElement.innerText = currentValue + 1;
+            if (typeof calcCartPriceAndDelivery === 'function') calcCartPriceAndDelivery();
         }
+
+        // Проверяем, что клик был совершен внутри корзины
+        if (event.target.hasAttribute('data-action') && event.target.closest('.cart-wrapper')) {
+            // Перерасчет общей стоимости товаров в корзине
+            calcCartPriceAndDelivery();         
+            
+        }   
+
+
+
     }
 });
